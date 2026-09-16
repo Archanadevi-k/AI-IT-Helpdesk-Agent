@@ -1,0 +1,9 @@
+ticket_id,description
+T001,I cannot connect my laptop to the office Wi-Fi.
+T002,My Outlook email is not sending attachments.
+T003,I forgot my password and my account is locked.
+T004,I received a suspicious email asking me to verify my password.
+T005,The printer is not printing anything.
+T006,The application crashes every time I open it.
+T007,Our whole team cannot access the VPN.
+T008,I think my laptop may have malware.

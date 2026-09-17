@@ -4,11 +4,11 @@ An AI/ML-powered IT support assistant that automatically analyzes IT support tic
 
 ## Project Overview
 
-          The **AI IT Helpdesk Agent** is designed to reduce repetitive manual work in IT support operations.
+ The **AI IT Helpdesk Agent** is designed to reduce repetitive manual work in IT support operations.
 
-          When an employee submits an IT issue, the system processes the ticket using **Natural Language Processing (NLP)** and Machine Learning techniques. It identifies the type of issue, estimates its priority, finds the most relevant troubleshooting article, and generates a draft response for the support team.
+When an employee submits an IT issue, the system processes the ticket using **Natural Language Processing (NLP)** and Machine Learning techniques. It identifies the type of issue, estimates its priority, finds the most relevant troubleshooting article, and generates a draft response for the support team.
 
-         The application is built with **Python and Streamlit** and runs locally without requiring an external API key.
+The application is built with **Python and Streamlit** and runs locally without requiring an external API key.
 
 ## Objectives
 

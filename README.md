@@ -1,269 +1,346 @@
 # AI IT Helpdesk Agent
 
-An internship-ready AI/ML project that automatically analyzes IT support tickets, predicts the ticket category and priority, retrieves a relevant knowledge-base article, and drafts a response for the support team.
+An AI/ML-powered IT support assistant that automatically analyzes IT support tickets, predicts their category and priority, retrieves relevant knowledge-base articles, and drafts support responses.
 
-## Project Name
+## Project Overview
 
-**AI IT Helpdesk Agent — Intelligent Ticket Classification, Priority Prediction & Knowledge Retrieval**
+          The **AI IT Helpdesk Agent** is designed to reduce repetitive manual work in IT support operations.
 
-## Problem Statement
+          When an employee submits an IT issue, the system processes the ticket using **Natural Language Processing (NLP)** and Machine Learning techniques. It identifies the type of issue, estimates its priority, finds the most relevant troubleshooting article, and generates a draft response for the support team.
 
-IT helpdesks receive repetitive natural-language requests such as Wi-Fi problems, password issues, application errors, hardware failures and suspicious emails. Manually categorizing, prioritizing and answering every ticket takes time and can create inconsistent responses.
+         The application is built with **Python and Streamlit** and runs locally without requiring an external API key.
 
-This project builds a lightweight AI assistant that:
+## Objectives
 
-1. Understands the text of an IT ticket.
-2. Predicts its support category.
-3. Estimates priority from urgency and impact signals.
-4. Retrieves the most relevant troubleshooting article.
-5. Generates a human-reviewable response draft.
-6. Displays confidence and reasoning signals.
+* Automate IT ticket classification
+* Predict ticket priority based on urgency and impact
+* Retrieve relevant troubleshooting information
+* Generate draft responses for IT support staff
+* Maintain ticket history and status
+* Demonstrate practical application of AI/ML in IT support
 
-## Architecture
+## Key Features
+
+### &#x20;Ticket Analysis
+
+Users can submit an IT issue through the Streamlit interface.
+
+The system automatically provides:
+
+* Ticket category
+* Priority level
+* Prediction confidence
+* AI analysis/reason
+* Recommended knowledge-base article
+* Draft support response
+* Unique ticket ID
+
+### AI-Based Classification
+
+The system classifies tickets into categories such as:
+
+* Network
+* Hardware
+* Software
+* Account & Access
+* Email
+* Security
+* Other
+
+The classification pipeline uses **TF-IDF feature extraction** with **Logistic Regression**.
+
+### Priority Prediction
+
+Tickets are assigned one of four priority levels:
+
+* **Critical**
+* **High**
+* **Medium**
+* **Low**
+
+Priority is determined using detected urgency, service-disruption, security, and business-impact signals.
+
+### Knowledge Base Retrieval
+
+The system searches the internal FAQ/knowledge base and retrieves the most relevant troubleshooting article using:
+
+* TF-IDF
+* Cosine Similarity
+
+### &#x20;Response Drafting
+
+Based on the ticket category, priority, and recommended knowledge article, the system generates a draft response that an IT support engineer can review and send.
+
+### Ticket History
+
+Created tickets are stored in an SQLite database.
+
+Support staff can:
+
+* View previous tickets
+* View ticket details
+* Check category and priority
+* View confidence
+* Update ticket status
+
+Available statuses:
+
+`Open` → `In Progress` → `Resolved` → `Closed`
+
+### Explainability
+
+The application displays detected signals and classification information so users can understand the factors considered when assigning a category and priority.
+
+## System Architecture
 
 ```text
-User Ticket
-    |
-    v
-Text Cleaning
-    |
-    +--------------------+
-    |                    |
-    v                    v
-ML Classifier       Priority Rules
-TF-IDF + LR         urgency/impact
-    |                    |
-    +---------+----------+
-              |
-              v
-      Knowledge Retrieval
-      TF-IDF + Cosine Similarity
-              |
-              v
+Employee / User
+      │
+      ▼
+Submit IT Issue
+      │
+      ▼
+Text Cleaning & NLP
+      │
+      ├───────────────┐
+      ▼               ▼
+Category Prediction   Priority Prediction
+(TF-IDF + LR)         (Rule-Based Signals)
+      │               │
+      └───────┬───────┘
+              ▼
+       Knowledge Retrieval
+       (TF-IDF + Cosine Similarity)
+              │
+              ▼
        Response Drafting
-              |
-              v
+              │
+              ▼
+       SQLite Ticket Storage
+              │
+              ▼
        Streamlit Dashboard
 ```
 
 ## Technology Stack
 
-- Python
-- Streamlit
-- Pandas / NumPy
-- Scikit-learn
-- TF-IDF vectorization
-- Logistic Regression
-- Cosine similarity
-- CSV-based knowledge base
+| Technology          | Purpose                   |
+| ------------------- | ------------------------- |
+| Python              | Core programming language |
+| Streamlit           | Web application interface |
+| Scikit-learn        | Machine Learning          |
+| TF-IDF              | Text feature extraction   |
+| Logistic Regression | Ticket classification     |
+| Cosine Similarity   | Knowledge retrieval       |
+| Pandas              | Data processing           |
+| NumPy               | Numerical operations      |
+| SQLite              | Ticket storage            |
+| Pytest              | Automated testing         |
+| GitHub Actions      | Continuous Integration    |
 
-## Main Features
-
-### 1. Ticket Classification
-The NLP classifier predicts:
-- Network
-- Hardware
-- Software
-- Account & Access
-- Email
-- Security
-- Other
-
-### 2. Priority Prediction
-The priority engine looks for urgency and business-impact signals and returns:
-- Critical
-- High
-- Medium
-- Low
-
-### 3. Knowledge Retrieval
-A TF-IDF retrieval system compares the ticket against the knowledge base and recommends the closest article.
-
-### 4. Response Drafting
-The system creates a support response containing the category, priority and recommended troubleshooting guidance.
-
-### 5. Explainability
-The interface exposes:
-- classification confidence
-- top category scores
-- detected priority factors
-- FAQ similarity score
-
-## Folder Structure
+## Project Structure
 
 ```text
-ai_it_helpdesk_agent/
-├── app.py
-├── requirements.txt
-├── README.md
-├── .gitignore
+AI-IT-Helpdesk-Agent/
+│
+├── .github/
+│   └── workflows/
+│       └── python.yml
+│
 ├── data/
 │   ├── faqs.csv
 │   └── sample_tickets.csv
-└── src/
-    ├── __init__.py
-    └── helpdesk.py
+│
+├── src/
+│   ├── __init__.py
+│   ├── helpdesk.py
+│   └── database.py
+│
+├── tests/
+│   └── test_helpdesk.py
+│
+├── .gitignore
+├── app.py
+├── LICENSE
+├── README.md
+└── requirements.txt
 ```
 
-## How to Run on Windows
+## How to Run the Project
 
-### Step 1 — Install Python
-
-Install Python 3.10+ from the official Python website and make sure **Add Python to PATH** is selected during installation.
-
-Verify:
+### 1. Clone the Repository
 
 ```bash
-python --version
+git clone https://github.com/Archanadevi-k/AI-IT-Helpdesk-Agent.git
+cd AI-IT-Helpdesk-Agent
 ```
 
-### Step 2 — Download / clone the project
-
-If using Git:
+### 2. Create a Virtual Environment
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd ai_it_helpdesk_agent
+python -m venv .venv
 ```
 
-Or download the ZIP from GitHub and extract it.
+### 3. Activate the Virtual Environment
 
-### Step 3 — Create a virtual environment
-
-Windows PowerShell:
+**Windows PowerShell:**
 
 ```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 ```
 
-If PowerShell blocks activation, Command Prompt can be used:
-
-```cmd
-.venv\Scripts\activate
-```
-
-### Step 4 — Install dependencies
+### 4. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-### Step 5 — Start the application
+### 5. Run the Application
 
 ```bash
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
-The terminal will show a local address, normally:
+The application will open in your browser at:
 
 ```text
 http://localhost:8501
 ```
 
-Open that address in Chrome or Edge.
+## &#x20;Run Tests
 
-## How to Run on macOS / Linux
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-## GitHub Upload
-
-From the project folder:
+Run the automated tests using:
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit - AI IT Helpdesk Agent"
-git branch -M main
-git remote add origin YOUR_GITHUB_REPOSITORY_URL
-git push -u origin main
+python -m pytest -q
 ```
 
-Do not upload passwords, API keys, company credentials, real employee information, or confidential tickets.
+Expected result:
 
-## Demo Inputs
+```text
+3 passed
+```
 
-Try these in the application:
+The project also uses **GitHub Actions** to automatically run the test suite whenever changes are pushed to the repository.
 
-**Network**
-> I cannot connect my laptop to the office Wi-Fi.
+## Application Workflow
 
-**Account**
-> I forgot my password and my account is locked.
+```text
+1. User submits an IT issue
+          ↓
+2. Ticket text is cleaned
+          ↓
+3. Category is predicted
+          ↓
+4. Priority is determined
+          ↓
+5. Relevant FAQ is retrieved
+          ↓
+6. Support response is drafted
+          ↓
+7. Ticket is stored in SQLite
+          ↓
+8. Support team reviews and manages the ticket
+```
 
-**Security**
-> I received a suspicious email asking me to verify my password.
+## AI/ML Approach
 
-**Hardware**
-> My printer is not printing anything.
+### Ticket Classification
 
-**Software**
-> The application crashes every time I open it.
+The project uses:
 
-**High-impact**
-> Our whole team cannot access the VPN and we have an important meeting soon.
+**TF-IDF → Logistic Regression**
 
-## Machine Learning Approach
+TF-IDF converts the ticket description into numerical text features. Logistic Regression then predicts the most appropriate support category.
 
-### Classification
+### Knowledge Retrieval
 
-The project uses TF-IDF features with unigram and bigram terms. Logistic Regression maps the ticket text to an IT-support category.
+The FAQ documents are converted into TF-IDF vectors. **Cosine Similarity** compares the submitted ticket with the available knowledge-base articles and selects the most relevant article.
 
-### Retrieval
+### Priority Prediction
 
-The knowledge base is transformed into TF-IDF vectors. Cosine similarity is used to find the article closest to the submitted ticket.
+Priority prediction uses a lightweight rule-based approach that detects signals such as:
 
-### Priority
+* Security incidents
+* Urgent language
+* Service disruption
+* Broad business impact
+* Production/system downtime
 
-Priority is a transparent rule-based layer. Terms indicating security incidents, broad impact or service disruption increase the priority level.
+## Human-in-the-Loop
 
-This hybrid design is intentional: ML handles language classification and retrieval, while explicit rules make urgent/security escalation easier to inspect.
+The system is designed as an **AI-assisted support tool**, not a fully autonomous IT administration system.
+
+The AI provides recommendations and response drafts. High-impact actions such as:
+
+* Account changes
+* Access permission changes
+* Password resets
+* Device administration
+
+remain under human control.
 
 ## Limitations
 
-This is an internship/demo system rather than a production service desk.
-
-- The classifier uses a small embedded training set.
-- Priority rules are not a substitute for an organization's official SLA.
-- The knowledge base is a CSV file.
-- No real ticketing-system integration is included.
-- The generated response should be reviewed by a human.
-- The system must not be given secrets such as passwords or MFA codes.
+* The ML classifier uses a lightweight embedded training dataset.
+* Priority prediction currently uses rule-based signals rather than a trained priority model.
+* The knowledge base is stored in CSV format.
+* The application does not directly integrate with enterprise ticketing platforms.
+* Generated responses should be reviewed by support staff before being sent.
+* The current application is intended as a demonstration/prototype rather than a production IT service-management system.
 
 ## Future Enhancements
 
-- Replace the small training set with an approved historical ticket dataset.
-- Add BERT/DistilBERT fine-tuning for classification.
-- Add an embedding/vector database such as FAISS.
-- Add RAG with an approved internal document store.
-- Add multilingual support for English/Tamil.
-- Add ticket database and authentication.
-- Integrate Jira, ServiceNow or another approved ticketing platform.
-- Add SLA-aware priority prediction.
-- Add feedback learning from support engineers.
-- Add analytics for ticket volume, category trends and resolution time.
-- Deploy with Docker and a production web server.
+Possible future improvements include:
 
-## Suggested Internship Viva Explanation
+* BERT/DistilBERT-based ticket classification
+* RAG-based knowledge retrieval
+* FAISS/vector database integration
+* Larger real-world training datasets
+* Multilingual support including English and Tamil
+* SLA-aware priority prediction
+* Jira/ServiceNow integration
+* User authentication and role-based access
+* IT support analytics dashboard
+* Docker deployment
+* Feedback-based model improvement
 
-**One-line explanation:**
+## Testing & CI
 
-> "AI IT Helpdesk Agent is an NLP-based assistant that classifies IT tickets, predicts their urgency, retrieves relevant troubleshooting knowledge and drafts a response so that support engineers can handle repetitive requests faster."
+The project includes automated unit tests using **Pytest**.
 
-**Why AI/ML?**
+GitHub Actions automatically executes the test suite on repository changes.
 
-> "The ticket arrives as unstructured natural language. TF-IDF converts the text into numerical features and Logistic Regression predicts the support category. A second TF-IDF representation and cosine similarity retrieve the most relevant knowledge-base article."
+Current test status:
 
-**Why hybrid AI instead of only an LLM?**
+```text
+✅ 3 tests passed
+✅ GitHub Actions workflow passed
+```
 
-> "For an internship prototype, a lightweight and explainable local model avoids API cost and protects ticket data. An LLM/RAG layer can be added later when organizational security and data policies allow it."
+## &#x20;Project Information
 
-## License
+This project demonstrates the practical application of:
 
-Educational / internship project. Adapt the license and organization-specific policies before production use.
+* Artificial Intelligence
+* Machine Learning
+* Natural Language Processing
+* Information Retrieval
+* Database Management
+* Streamlit Application Development
+* Software Testing
+* Git & GitHub
+* Continuous Integration
+
+## &#x20;Project Summary
+
+> **AI IT Helpdesk Agent is an NLP-based AI assistant that classifies IT tickets, predicts their urgency, retrieves relevant troubleshooting knowledge, and drafts support responses, helping IT teams handle repetitive support requests more efficiently.**
+
+## 👤 Author
+
+**Archanadevi-k**
+
+GitHub:
+
+https://github.com/Archanadevi-k/AI-IT-Helpdesk-Agent
+
